@@ -1,5 +1,6 @@
 global using BlazorEcommerce.Shared;
 using BlazorEcommerce.Server.Data;
+using BlazorEcommerce.Server.Services;
 
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +14,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<BlCommerceDataContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
-
+builder.Services.AddScoped<IProductService, ProductService>();
 var app = builder.Build();
 app.UseSwaggerUI();
 // Configure the HTTP request pipeline.
