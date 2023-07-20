@@ -1,4 +1,4 @@
-﻿@inject HttpClient httpClient
+﻿@inject IProductService productService
 
 @if (_products == null)
 {
@@ -33,9 +33,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var res = await httpClient.GetFromJsonAsync<ServiceResponse<List<Product>>>("/api/Product");
-        if (res != null && res.Success && res.Data != null)
-            _products = res.Data;
+        await productService.GetProductsAsync();
+        _products = productService.Products;
     }
 
 }
