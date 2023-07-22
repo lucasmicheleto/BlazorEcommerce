@@ -5,8 +5,8 @@ namespace BlazorEcommerce.Client.Services
     public interface IProductService
     {
         List<Product> Products { get; set; }
-
-        Task GetProductsAsync();
+        event Action ProductsChanged;
+        Task GetProductsAsync(string categoryUrl = null);
         Task<Product> GetProductAsync(int id);
     }
 }

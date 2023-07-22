@@ -1,4 +1,5 @@
 global using BlazorEcommerce.Shared;
+using BlazorEcommerce.Server;
 using BlazorEcommerce.Server.Data;
 using BlazorEcommerce.Server.Services;
 
@@ -15,6 +16,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<BlCommerceDataContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("Default")).EnableSensitiveDataLogging());
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 var app = builder.Build();
 app.UseSwaggerUI();
 // Configure the HTTP request pipeline.
