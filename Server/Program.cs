@@ -13,7 +13,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<BlCommerceDataContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddDbContext<BlCommerceDataContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("Default")).EnableSensitiveDataLogging());
 builder.Services.AddScoped<IProductService, ProductService>();
 var app = builder.Build();
 app.UseSwaggerUI();

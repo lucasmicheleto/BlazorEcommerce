@@ -7,5 +7,6 @@ namespace BlazorEcommerce.Client.Services
         List<Product> Products { get; set; }
 
         Task GetProductsAsync();
+        Task<Product> GetProductAsync(int id);
     }
 }

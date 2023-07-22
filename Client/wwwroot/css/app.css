@@ -14,6 +14,7 @@ h1:focus {
 
 a, .btn-link {
     color: #529acd;
+    text-decoration: none;
 }
 
 .btn-primary {
@@ -106,4 +107,32 @@ a, .btn-link {
 
     .loading-progress-text:after {
         content: var(--blazor-load-percentage-text, "Loading");
+    }
+    
+    .media-img:hover{
+        transform: scale(1.1);
+    }
+    
+    .media{
+        display: flex;
+        align-items: flex-start;
+    }
+    
+    .media-body{
+        flex: 1;
+    }
+    
+    .price {
+        color: #248964;
+    }
+    
+    @media (max-width: 1023.98px){
+        .media{
+            flex-direction: column;
+        }
+    
+        .media-img-wrapper{
+            width: 100%!important;
+            height: auto;
+        }
     }

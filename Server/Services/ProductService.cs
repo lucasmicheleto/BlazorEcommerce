@@ -23,5 +23,16 @@ namespace BlazorEcommerce.Server.Services
             };
             return res;
         }
+
+        public async Task<ServiceResponse<Product>> GetProductAsync(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+            var res = new ServiceResponse<Product>()
+            {
+                Success = true,
+                Data = product
+            };
+            return res;
+        }
     }
 }

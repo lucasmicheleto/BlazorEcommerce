@@ -1,9 +1,5 @@
-﻿using BlazorEcommerce.Server.Data;
-using BlazorEcommerce.Server.Services;
-
-using Microsoft.AspNetCore.Http;
+﻿using BlazorEcommerce.Server.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BlazorEcommerce.Server.Controllers
 {
@@ -22,6 +18,13 @@ namespace BlazorEcommerce.Server.Controllers
         public async Task<ActionResult<IEnumerable<Product>>> Get()
         {
             var res = await _service.GetProductsAsync();
+            return Ok(res);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Product>> Get([FromRoute]int id)
+        {
+            var res = await _service.GetProductAsync(id);
             return Ok(res);
         }
     }

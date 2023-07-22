@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorEcommerce.Server.Migrations
 {
     [DbContext(typeof(BlCommerceDataContext))]
-    [Migration("20230720022859_SeedProducts")]
-    partial class SeedProducts
+    [Migration("20230722021836_Categories")]
+    partial class Categories
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,47 @@ namespace BlazorEcommerce.Server.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("BlazorEcommerce.Shared.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Mobiles",
+                            Url = "mobiles"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Books",
+                            Url = "books"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Games",
+                            Url = "games"
+                        });
+                });
+
             modelBuilder.Entity("BlazorEcommerce.Shared.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -31,6 +72,9 @@ namespace BlazorEcommerce.Server.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -49,12 +93,15 @@ namespace BlazorEcommerce.Server.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Products");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
+                            CategoryId = 1,
                             Description = "The latest iPhone model with 5G technology",
                             ImageUrl = "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-13.jpg",
                             Price = 799.00m,
@@ -63,6 +110,7 @@ namespace BlazorEcommerce.Server.Migrations
                         new
                         {
                             Id = 2,
+                            CategoryId = 1,
                             Description = "The latest Samsung Galaxy model with 5G technology",
                             ImageUrl = "https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s21-5g-r.jpg",
                             Price = 799.99m,
@@ -71,11 +119,23 @@ namespace BlazorEcommerce.Server.Migrations
                         new
                         {
                             Id = 3,
+                            CategoryId = 1,
                             Description = "The latest Google Pixel model with 5G technology",
                             ImageUrl = "https://fdn2.gsmarena.com/vv/bigpic/google-pixel-6.jpg",
                             Price = 699.00m,
                             Title = "Google Pixel 6"
                         });
+                });
+
+            modelBuilder.Entity("BlazorEcommerce.Shared.Product", b =>
+                {
+                    b.HasOne("BlazorEcommerce.Shared.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }
